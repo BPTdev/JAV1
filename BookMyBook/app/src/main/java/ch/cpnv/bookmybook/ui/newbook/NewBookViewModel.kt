@@ -1,13 +1,13 @@
-package ch.cpnv.bookmybook.ui.slideshow
+package ch.cpnv.bookmybook.ui.newbook
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class NewBookViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "New Book"
     }
     val text: LiveData<String> = _text
 }

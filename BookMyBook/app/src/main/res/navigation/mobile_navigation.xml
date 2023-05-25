@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_new_rent"
-        android:name="ch.cpnv.bookmybook.ui.gallery.GalleryFragment"
-        android:label="New Rent"
+        android:name="ch.cpnv.bookmybook.ui.newrent.NewRentFragment"
+        android:label="@string/menu_new_rent"
         tools:layout="@layout/fragment_new_rent" />
 
     <fragment
         android:id="@+id/nav_new_book"
-        android:name="ch.cpnv.bookmybook.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="ch.cpnv.bookmybook.ui.newbook.NewBookFragment"
+        android:label="@string/menu_new_book"
+        tools:layout="@layout/fragment_new_book" />
 </navigation>

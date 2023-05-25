@@ -6,13 +6,27 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="save_button">Save</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_new_rent">New rent</string>
     <string name="menu_new_book">New book</string>
     <string name="menu_edit_rent">Edit rent</string>
     <string name="menu_edit_book">Edit book</string>
-    <string name="menu_slideshow">Slideshow</string>
 
+
+    <string name="form_book_text_name">Name</string>
+    <string name="form_book_text_description">Description</string>
+    <string name="form_book_text_isbn">ISBN</string>
+    <string name="form_book_button_scanner">Open Scanner</string>
+
+
+
+
+
+    <string name="form_rent_text_name">Name</string>
+    <string name="form_rent_date_start">Start date</string>
+    <string name="form_rent_date_end">End date</string>
+    <string name="form_rent_button_contacts">Open Contacts</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package ch.cpnv.bookmybook.ui.gallery
+package ch.cpnv.bookmybook.ui.newrent
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import ch.cpnv.bookmybook.databinding.FragmentHomeBinding
+import ch.cpnv.bookmybook.databinding.FragmentNewRentBinding
 
-class GalleryFragment : Fragment() {
+class NewRentFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentNewRentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,16 +22,16 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
+        val newRentViewModel =
+            ViewModelProvider(this).get(NewRentViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentNewRentBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        /*val textView: TextView = binding.nav_new_rent
-        galleryViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.RentTitle1
+        newRentViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        }*/
+        }
         return root
     }
 

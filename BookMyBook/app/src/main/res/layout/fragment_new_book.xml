@@ -4,43 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.newbook.NewBookFragment">
+    tools:context=".ui.newrent.NewRentFragment">
 
-    <EditText
-        android:id="@+id/RentEditDateStart"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
+    <TextView
+        android:id="@+id/BookTitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:autofillHints="book_name"
-        android:ems="10"
-        android:hint="@string/form_rent_date_start"
-        android:inputType="date"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RentEditTextName" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/menu_new_book" />
 
     <EditText
-        android:id="@+id/RentEditDateEnd"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:autofillHints="book_name"
-        android:ems="10"
-        android:hint="@string/form_rent_date_end"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RentEditDateStart" />
-
-
-    <EditText
-        android:id="@+id/RentEditTextName"
+        android:id="@+id/BookEditTextName"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -48,28 +28,48 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:autofillHints="book_name"
         android:ems="10"
-        android:hint="@string/form_rent_text_name"
+        android:hint="@string/form_book_text_name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BookTitle1" />
+
+    <EditText
+        android:id="@+id/BookEditTextDescription"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:autofillHints="book_name"
+        android:ems="10"
+        android:hint="@string/form_book_text_description"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RentTitle1" />
+        app:layout_constraintTop_toBottomOf="@+id/BookEditTextName" />
 
-    <TextView
-        android:id="@+id/RentTitle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="16dp"
-        android:textSize="34sp"
+    <EditText
+        android:id="@+id/BookEditTextIsbn"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:autofillHints="book_name"
+        android:ems="10"
+        android:hint="@string/form_book_text_isbn"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/menu_new_rent" />
+        app:layout_constraintTop_toBottomOf="@+id/BookEditTextDescription" />
 
     <Button
-        android:id="@+id/RentButtonSave"
+        android:id="@+id/BookButtonSave"
         android:layout_width="0dp"
-        android:layout_height="51dp"
+        android:layout_height="50dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -79,16 +79,16 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/RentButtonContacts"
+        android:id="@+id/rentButtonContacts"
         android:layout_width="0dp"
         android:layout_height="51dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:text="@string/form_rent_button_contacts"
+        android:text="@string/form_book_button_scanner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RentEditDateEnd" />
+        app:layout_constraintTop_toBottomOf="@+id/BookEditTextIsbn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

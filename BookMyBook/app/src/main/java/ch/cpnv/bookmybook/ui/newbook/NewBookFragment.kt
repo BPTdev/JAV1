@@ -1,4 +1,4 @@
-package ch.cpnv.bookmybook.ui.slideshow
+package ch.cpnv.bookmybook.ui.newbook
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import ch.cpnv.bookmybook.databinding.FragmentSlideshowBinding
+import ch.cpnv.bookmybook.databinding.FragmentNewBookBinding
 
-class SlideshowFragment : Fragment() {
+class NewBookFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentNewBookBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        val newBookViewModel =
+            ViewModelProvider(this).get(NewBookViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentNewBookBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.BookTitle1
+        newBookViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
