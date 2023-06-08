@@ -1,6 +1,10 @@
 package ch.cpnv.bookmybook.ui.newbook
 
+import android.content.Intent
+import android.hardware.camera2.CameraCharacteristics
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +12,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ch.cpnv.bookmybook.databinding.FragmentNewBookBinding
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.common.InputImage
 
 class NewBookFragment : Fragment() {
 
@@ -34,6 +34,10 @@ class NewBookFragment : Fragment() {
         newBookViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+        binding.rentButtonContacts.setOnClickListener {
+            openCamera()
+        }
+
         return root
     }
 
@@ -41,54 +45,18 @@ class NewBookFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    private fun scanBarcodes(image: InputImage) {
-        // [START set_detector_options]
-        val options = BarcodeScannerOptions.Builder()
-            .setBarcodeFormats(
-                Barcode.FORMAT_QR_CODE,
-                Barcode.FORMAT_AZTEC)
-            .build()
-        // [END set_detector_options]
-
-        // [START get_detector]
-        val scanner = BarcodeScanning.getClient()
-        // Or, to specify the formats to recognize:
-        // val scanner = BarcodeScanning.getClient(options)
-        // [END get_detector]
-
-        // [START run_detector]
-        val result = scanner.process(image)
-            .addOnSuccessListener { barcodes ->
-                // Task completed successfully
-                // [START_EXCLUDE]
-                // [START get_barcodes]
-                for (barcode in barcodes) {
-                    val bounds = barcode.boundingBox
-                    val corners = barcode.cornerPoints
-
-                    val rawValue = barcode.rawValue
-
-                    val valueType = barcode.valueType
-                    // See API reference for complete list of supported types
-                    when (valueType) {
-                        Barcode.TYPE_WIFI -> {
-                            val ssid = barcode.wifi!!.ssid
-                            val password = barcode.wifi!!.password
-                            val type = barcode.wifi!!.encryptionType
-                        }
-                        Barcode.TYPE_URL -> {
-                            val title = barcode.url!!.title
-                            val url = barcode.url!!.url
-                        }
-                    }
-                }
-                // [END get_barcodes]
-                // [END_EXCLUDE]
+    fun openCamera() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1 && Build.VERSION.SDK_INT < Build.VERSION_CODES.O -> {
+                cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", CameraCharacteristics.LENS_FACING_FRONT)  // Tested on API 24 Android version 7.0(Samsung S6)
             }
-            .addOnFailureListener {
-                // Task failed with an exception
-                // ...
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", CameraCharacteristics.LENS_FACING_FRONT) // Tested on API 27 Android version 8.0(Nexus 6P)
+                cameraIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
             }
-        // [END run_detector]
+            else -> cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1)  // Tested API 21 Android version 5.0.1(Samsung S4)
+        }
+        startActivityForResult(cameraIntent, 0)
     }
 }

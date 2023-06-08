@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bookButtonContacts"
+        android:id="@+id/rentButtonContacts"
         android:layout_width="0dp"
         android:layout_height="51dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
