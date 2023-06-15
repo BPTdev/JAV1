@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import ch.cpnv.bookmybook.DBHelper
 import ch.cpnv.bookmybook.databinding.FragmentNewBookBinding
 
 class NewBookFragment : Fragment() {
@@ -34,8 +36,22 @@ class NewBookFragment : Fragment() {
         newBookViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
-        binding.rentButtonContacts.setOnClickListener {
+        binding.BookButtonScanner.setOnClickListener {
             openCamera()
+        }
+
+        binding.BookButtonSave.setOnClickListener {
+            val name = binding.BookEditTextName.text.toString()
+            val description = binding.BookEditTextDescription.text.toString()
+            val isbn = binding.BookEditTextIsbn.text.toString()
+            val db = DBHelper(requireContext(), null)
+            db.addBook(name, description, isbn)
+            Toast.makeText(requireContext(), name + " added to database", Toast.LENGTH_LONG).show()
+
+            // at last, clearing edit texts
+            binding.BookEditTextName.text.clear()
+            binding.BookEditTextDescription.text.clear()
+            binding.BookEditTextIsbn.text.clear()
         }
 
         return root
