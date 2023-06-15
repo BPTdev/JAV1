@@ -5,12 +5,12 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import ch.cpnv.bookmybook.ui.newbook.NewBookFragment
+import ch.cpnv.bookmybook.ui.books.Book
 
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
-    // below is the method for creating a database by a sqlite query
+    // below is the method for creating a database by a SQLite query
     override fun onCreate(db: SQLiteDatabase) {
         val bookQuery = ("CREATE TABLE " + BOOK_TABLE_NAME + " ("
                 + BOOK_ID_COL + " INTEGER PRIMARY KEY, " +
@@ -30,15 +30,14 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
-        // this method is to check if table already exists
-        db.execSQL("DROP TABLE IF EXISTS " + BOOK_TABLE_NAME)
-        db.execSQL("DROP TABLE IF EXISTS " + RENT_TABLE_NAME)
+        // this method is to check if the table already exists
+        db.execSQL("DROP TABLE IF EXISTS $BOOK_TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $RENT_TABLE_NAME")
         onCreate(db)
     }
 
-    // This method is for adding data in our database
-    fun addBook(name : String, desc : String, isbn : String ){
-
+    // This method is for adding data to our database
+    fun addBook(name: String, desc: String, isbn: String) {
         val values = ContentValues()
         values.put(BOOK_NAME_COL, name)
         values.put(BOOK_DESC_COL, desc)
@@ -48,13 +47,33 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun getBook(): Cursor? {
+    fun getBooks(): List<Book> {
+        val bookList = mutableListOf<Book>()
         val db = this.readableDatabase
-        return db.rawQuery("SELECT * FROM " + BOOK_TABLE_NAME, null)
+        val cursor = db.rawQuery("SELECT * FROM $BOOK_TABLE_NAME", null)
+
+        cursor.use {
+            val idIndex = it.getColumnIndexOrThrow(BOOK_ID_COL)
+            val nameIndex = it.getColumnIndexOrThrow(BOOK_NAME_COL)
+            val descIndex = it.getColumnIndexOrThrow(BOOK_DESC_COL)
+            val isbnIndex = it.getColumnIndexOrThrow(BOOK_ISBN_COL)
+
+            while (it.moveToNext()) {
+                val id = it.getInt(idIndex)
+                val name = it.getString(nameIndex)
+                val description = it.getString(descIndex)
+                val isbn = it.getString(isbnIndex)
+                val book = Book(id, name, description, isbn)
+                bookList.add(book)
+            }
+        }
+
+        return bookList
     }
 
-    fun addRent(name : String, dateStart : String, dateEnd : String ){
 
+
+    fun addRent(name: String, dateStart: String, dateEnd: String) {
         val values = ContentValues()
         values.put(RENT_NAME_COL, name)
         values.put(RENT_DATE_START_COL, dateStart)
@@ -63,28 +82,27 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.insert(RENT_TABLE_NAME, null, values)
         db.close()
     }
+
     fun getRent(): Cursor? {
         val db = this.readableDatabase
-        return db.rawQuery("SELECT * FROM " + RENT_TABLE_NAME, null)
+        return db.rawQuery("SELECT * FROM $RENT_TABLE_NAME", null)
     }
 
-    companion object{
+    companion object {
 
-        private val DATABASE_NAME = "BOOKMYBOOK"
-        private val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "BOOKMYBOOK"
+        private const val DATABASE_VERSION = 1
 
+        const val BOOK_TABLE_NAME = "Books"
+        const val BOOK_ID_COL = "id"
+        const val BOOK_NAME_COL = "name"
+        const val BOOK_DESC_COL = "description"
+        const val BOOK_ISBN_COL = "isbn"
 
-        val BOOK_TABLE_NAME = "Books"
-        val BOOK_ID_COL = "id"
-        val BOOK_NAME_COL = "name"
-        val BOOK_DESC_COL = "description"
-        val BOOK_ISBN_COL = "isbn"
-
-
-        val RENT_TABLE_NAME = "Rents"
-        val RENT_ID_COL = "rent_id"
-        val RENT_NAME_COL = "rent_name"
-        val RENT_DATE_START_COL = "rent_date_start"
-        val RENT_DATE_END_COL = "rent_date_end"
+        const val RENT_TABLE_NAME = "Rents"
+        const val RENT_ID_COL = "rent_id"
+        const val RENT_NAME_COL = "rent_name"
+        const val RENT_DATE_START_COL = "rent_date_start"
+        const val RENT_DATE_END_COL = "rent_date_end"
     }
 }
