@@ -29,4 +29,7 @@
     <string name="form_rent_date_end">End date</string>
     <string name="form_rent_button_contacts">Open Contacts</string>
 
+
+    <string name="book_title">Books</string>
+
 </resources>
