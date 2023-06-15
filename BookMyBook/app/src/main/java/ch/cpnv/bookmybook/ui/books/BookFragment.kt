@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import ch.cpnv.bookmybook.R
 import ch.cpnv.bookmybook.databinding.FragmentBooksBinding
 import ch.cpnv.bookmybook.DBHelper
+import java.util.Date
 
 class BookFragment : Fragment() {
     private var _binding: FragmentBooksBinding? = null
@@ -64,4 +65,11 @@ data class Book(
     val name: String,
     val description: String,
     val isbn: String
+)
+data class Rent(
+    val id: Int,
+    val contact: Int,
+    val name: String,
+    val startDate: String,
+    val endDate: Date,
 )

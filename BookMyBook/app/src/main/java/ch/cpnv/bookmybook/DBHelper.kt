@@ -2,10 +2,10 @@ package ch.cpnv.bookmybook
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import ch.cpnv.bookmybook.ui.books.Book
+import ch.cpnv.bookmybook.ui.books.Rent
 
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -22,7 +22,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         val rentQuery = ("CREATE TABLE " + RENT_TABLE_NAME + " ("
                 + RENT_ID_COL + " INTEGER PRIMARY KEY, " +
-                RENT_NAME_COL + " TEXT," +
+                RENT_CONTACT_ID_COL + " INTEGER, " +
+                RENT_BOOK_ID_COL + " INTEGER," +
                 RENT_DATE_START_COL + " DATE," +
                 RENT_DATE_END_COL + " DATE" + ")")
 
@@ -73,9 +74,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
 
 
-    fun addRent(name: String, dateStart: String, dateEnd: String) {
+    fun addRent(book_id: Int,contact_id: Int, dateStart: String, dateEnd: String) {
         val values = ContentValues()
-        values.put(RENT_NAME_COL, name)
+        values.put(RENT_BOOK_ID_COL, book_id)
+        values.put(RENT_CONTACT_ID_COL, contact_id)
         values.put(RENT_DATE_START_COL, dateStart)
         values.put(RENT_DATE_END_COL, dateEnd)
         val db = this.writableDatabase
@@ -83,10 +85,31 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun getRent(): Cursor? {
+    fun getRent(): List<Rent> {
+        val rentList = mutableListOf<Rent>()
         val db = this.readableDatabase
-        return db.rawQuery("SELECT * FROM $RENT_TABLE_NAME", null)
+        val cursor = db.rawQuery("SELECT * FROM $RENT_TABLE_NAME", null)
+
+        cursor.use {
+            val idIndex = it.getColumnIndexOrThrow(RENT_ID_COL)
+            val bookIdIndex = it.getColumnIndexOrThrow(BOOK_ID_COL)
+            val startDateIndex = it.getColumnIndexOrThrow(RENT_DATE_START_COL)
+            val endDateIndex = it.getColumnIndexOrThrow(RENT_DATE_END_COL)
+
+            while (it.moveToNext()) {
+                val id = it.getInt(idIndex)
+                val bookId = it.getInt(bookIdIndex)
+                val startDate = it.getString(startDateIndex)
+                val endDate = it.getString(endDateIndex)
+                val rent = Rent(id, bookId, startDate, endDate)
+                rentList.add(rent)
+            }
+        }
+
+        return rentList
     }
+
+
 
     companion object {
 
@@ -100,8 +123,9 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         const val BOOK_ISBN_COL = "isbn"
 
         const val RENT_TABLE_NAME = "Rents"
+        const val RENT_CONTACT_ID_COL = "contact_id"
         const val RENT_ID_COL = "rent_id"
-        const val RENT_NAME_COL = "rent_name"
+        const val RENT_BOOK_ID_COL = "rent_book_id"
         const val RENT_DATE_START_COL = "rent_date_start"
         const val RENT_DATE_END_COL = "rent_date_end"
     }
