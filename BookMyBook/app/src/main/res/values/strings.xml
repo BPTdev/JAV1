@@ -28,6 +28,7 @@
     <string name="form_rent_date_start">Start date</string>
     <string name="form_rent_date_end">End date</string>
     <string name="form_rent_button_contacts">Open Contacts</string>
+    <string name="form_rent_hint_date">YYYY-MM-DD</string>
 
 
     <string name="book_title">Books</string>

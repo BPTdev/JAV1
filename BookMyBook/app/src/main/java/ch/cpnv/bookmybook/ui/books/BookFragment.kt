@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import ch.cpnv.bookmybook.R
 import ch.cpnv.bookmybook.databinding.FragmentBooksBinding
 import ch.cpnv.bookmybook.DBHelper
+import ch.cpnv.bookmybook.ui.rents.RentFragment
 
 class BookFragment : Fragment() {
     private var _binding: FragmentBooksBinding? = null
@@ -37,6 +38,14 @@ class BookFragment : Fragment() {
         listView.adapter=listAdapter
         return root
     }
+    /*private fun openBook(bookId: Int) {
+        val bookDetailsFragment = RentFragment.newInstance(bookId)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, bookDetailsFragment)
+            .addToBackStack(null)
+            .commit()
+    }*/
+
     class BookAdapter(private val context: Activity, private val bookList: List<Book>) :
         ArrayAdapter<Book>(context, R.layout.listview_books_single_item, bookList) {
 

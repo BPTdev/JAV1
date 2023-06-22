@@ -26,4 +26,8 @@
         android:id="@+id/nav_books"
         android:name="ch.cpnv.bookmybook.ui.books.BookFragment"
         android:label="BookFragment" />
+    <fragment
+        android:id="@+id/nav_rents"
+        android:name="ch.cpnv.bookmybook.ui.rents.RentFragment"
+        android:label="BookFragment" />
 </navigation>

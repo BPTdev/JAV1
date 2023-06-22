@@ -58,4 +58,8 @@ class RentFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    companion object {
+
+    }
 }

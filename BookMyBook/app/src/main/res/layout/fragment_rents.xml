@@ -19,7 +19,7 @@
         android:id="@+id/Rents_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/book_title"
+        android:text="Rents"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
