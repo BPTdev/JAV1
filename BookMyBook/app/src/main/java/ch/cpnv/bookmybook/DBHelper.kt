@@ -24,8 +24,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 + RENT_ID_COL + " INTEGER PRIMARY KEY, " +
                 RENT_CONTACT_ID_COL + " INTEGER, " +
                 RENT_BOOK_ID_COL + " INTEGER," +
-                RENT_DATE_START_COL + " DATE," +
-                RENT_DATE_END_COL + " DATE" + ")")
+                RENT_DATE_END_COL + " DATE," +
+                RENT_DATE_START_COL + " DATE" + ")")
 
         db.execSQL(rentQuery)
     }
@@ -93,14 +93,14 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         cursor.use {
             val idIndex = it.getColumnIndexOrThrow(RENT_ID_COL)
             val bookIdIndex = it.getColumnIndexOrThrow(BOOK_ID_COL)
-            val startDateIndex = it.getColumnIndexOrThrow(RENT_DATE_START_COL)
             val endDateIndex = it.getColumnIndexOrThrow(RENT_DATE_END_COL)
+            val startDateIndex = it.getColumnIndexOrThrow(RENT_DATE_START_COL)
 
             while (it.moveToNext()) {
                 val id = it.getInt(idIndex)
                 val bookId = it.getInt(bookIdIndex)
-                val startDate = it.getString(startDateIndex)
                 val endDate = it.getString(endDateIndex)
+                val startDate = it.getString(startDateIndex)
                 val rent = Rent(id, bookId, startDate, endDate)
                 rentList.add(rent)
             }
