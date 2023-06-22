@@ -72,8 +72,6 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return bookList
     }
 
-
-
     fun addRent(book_id: Int,contact_id: Int, dateStart: String, dateEnd: String) {
         val values = ContentValues()
         values.put(RENT_BOOK_ID_COL, book_id)
@@ -85,23 +83,25 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun getRent(): List<Rent> {
+    fun getRents(): List<Rent> {
         val rentList = mutableListOf<Rent>()
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $RENT_TABLE_NAME", null)
 
         cursor.use {
             val idIndex = it.getColumnIndexOrThrow(RENT_ID_COL)
-            val bookIdIndex = it.getColumnIndexOrThrow(BOOK_ID_COL)
+            val bookIdIndex = it.getColumnIndexOrThrow(RENT_BOOK_ID_COL)
             val endDateIndex = it.getColumnIndexOrThrow(RENT_DATE_END_COL)
             val startDateIndex = it.getColumnIndexOrThrow(RENT_DATE_START_COL)
+            val contactIdIndex = it.getColumnIndexOrThrow(RENT_CONTACT_ID_COL)
 
             while (it.moveToNext()) {
                 val id = it.getInt(idIndex)
                 val bookId = it.getInt(bookIdIndex)
-                val endDate = it.getString(endDateIndex)
-                val startDate = it.getString(startDateIndex)
-                val rent = Rent(id, bookId, startDate, endDate)
+                val endDateString = it.getString(endDateIndex)
+                val startDateString = it.getString(startDateIndex)
+                val contactId = it.getInt(contactIdIndex)
+                val rent = Rent(id, bookId,contactId, startDateString, endDateString)
                 rentList.add(rent)
             }
         }
